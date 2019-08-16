@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { createCustomElement } from '@angular/elements';
 
 import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './about.component';
@@ -12,4 +13,11 @@ import { AboutComponent } from './about.component';
     AboutRoutingModule
   ]
 })
-export class AboutModule { }
+export class AboutModule {  constructor(private injector: Injector) {
+
+}
+ngDoBootstrap() {
+  const el = createCustomElement(AboutComponent, {injector: this.injector});
+  customElements.define('about-root', el);
+}
+}
